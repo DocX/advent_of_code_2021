@@ -4,8 +4,14 @@
 
 ## Instructions
 
-Run as plain ruby scripts with the argument of the input file. E.g.:
+Run as the `aoc.rb` entry point:
 
 ```
-ruby 2/2_part_1.rb 2/input.txt
+ruby aoc.rb TASK_NUMBER [test]
+```
+
+For example to run task 3:
+
+```
+ruby aoc.rb 3
 ```

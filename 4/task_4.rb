@@ -75,22 +75,33 @@ def last_winning_board(boards, numbers_to_draw)
   return last
 end
 
+class Task4 < Task
+  def name
+    "Day 4: Giant Squid"
+  end
 
-lines = File.readlines(ARGV[0])
-numbers_to_draw = lines[0].split(",").map(&:to_i)
-boards_lines = lines[2..-1]
+  def boards
+    Board.parse_boards(input[2..-1])
+  end
 
-boards = Board.parse_boards(boards_lines)
-winning_number, winning_board = first_winning_board(boards, numbers_to_draw)
-puts "first winning number: #{winning_number}"
-puts "first winning board:\n#{winning_board}"
-puts "first sum unmarked: #{winning_board.sum_unmarked}"
-puts "first score: #{winning_board.sum_unmarked * winning_number}"
-puts ""
+  def numbers_to_draw
+    @numbers_to_draw = input[0].split(",").map(&:to_i)
+  end
 
-boards = Board.parse_boards(boards_lines)
-winning_number, winning_board = last_winning_board(boards, numbers_to_draw)
-puts "last winning number: #{winning_number}"
-puts "last winning board:\n#{winning_board}"
-puts "last sum unmarked: #{winning_board.sum_unmarked}"
-puts "last score: #{winning_board.sum_unmarked * winning_number}"
+  def solve_part_1
+    winning_number, winning_board = first_winning_board(boards, numbers_to_draw)
+    puts "first winning number: #{winning_number}"
+    puts "first winning board:\n#{winning_board}"
+    puts "first sum unmarked: #{winning_board.sum_unmarked}"
+
+    winning_board.sum_unmarked * winning_number
+  end
+
+  def solve_part_2
+    winning_number, winning_board = last_winning_board(boards, numbers_to_draw)
+    puts "last winning number: #{winning_number}"
+    puts "last winning board:\n#{winning_board}"
+    puts "last sum unmarked: #{winning_board.sum_unmarked}"
+    winning_board.sum_unmarked * winning_number
+  end
+end

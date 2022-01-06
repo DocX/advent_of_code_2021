@@ -49,20 +49,32 @@ class Line
   end
 end
 
-def parse_lines(input)
-  input.map { |line| Line.parse(line) }
+class Task5 < Task
+  def name
+    "Day 5: Hydrothermal Venture"
+  end
+  
+  def parse_lines(input)
+    input.map { |line| Line.parse(line) }
+  end
+
+  def overlaps(lines)
+    lines.flat_map(&:points).tally
+  end
+
+  def count_of_overlaps(lines, threshold)
+    overlaps(lines).count { |_, overlaps| overlaps >= threshold }
+  end
+
+  def lines
+    @lines ||= parse_lines(input)
+  end
+
+  def solve_part_1
+    count_of_overlaps(lines.select(&:aligned?), 2)
+  end
+
+  def solve_part_2
+    count_of_overlaps(lines, 2)
+  end
 end
-
-def overlaps(lines)
-  lines.flat_map(&:points).tally
-end
-
-def count_of_overlaps(lines, threshold)
-  overlaps(lines).count { |_, overlaps| overlaps >= threshold }
-end
-
-input = File.readlines(ARGV[0])
-lines = parse_lines(input)
-
-puts "number of overlaps for horizontal/vertical lines >= 2: #{count_of_overlaps(lines.select(&:aligned?), 2)}"
-puts "number of overlaps for all lines >= 2: #{count_of_overlaps(lines, 2)}"
