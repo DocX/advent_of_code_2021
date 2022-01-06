@@ -49,7 +49,11 @@ class Task
   end
 
   def print_solution
+    debug_log { "#{name} - Part 1:" }
     puts "#{name} - Part 1: #{solve_part_1}"
+    
+    debug_log { "" }
+    debug_log { "#{name} - Part 2:" }
     puts "#{name} - Part 2: #{solve_part_2}"
   end
 end
