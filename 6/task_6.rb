@@ -6,26 +6,34 @@ class Task6 < Task
     "Day 6: Lanternfish"
   end
 
-  def simulate_days(times, days)
+  def simulate_days(timer_counts, days)
+    # puts "Initial: #{timer_counts}"
     day = 1
     while day <= days
       # reset 0 and produce new fishes
-      times = times + Array.new(times.count { |t| t == 0 }, NEW_FISH_TIMER)
-      times = times.map { |t| t == 0 ? RESET_TIMER : t }
+      timer_counts[NEW_FISH_TIMER] = timer_counts[0] if timer_counts[0]
+      timer_counts[RESET_TIMER] = (timer_counts[RESET_TIMER] || 0) + (timer_counts[0] || 0)
+      timer_counts.delete 0
 
       # decrement timer
-      times = times.map { |t| t - 1 }
-      # puts "Day #{day}: #{times}"
+      timer_counts.transform_keys! { |t| t - 1 }
+      # puts "Day #{day}: #{timer_counts}"
       day = day + 1
     end
 
-    times.count
+    timer_counts.values.sum
+  end
+
+  def initial_timers
+    fish_timers = input[0].split(",").map(&:to_i)
+    fish_timers.tally
   end
 
   def solve_part_1
-    fish_times = input[0].split(",").map(&:to_i)
-    # puts "Initial: #{fish_times}"
-    
-    simulate_days(fish_times, 80)
+    simulate_days(initial_timers, 80)
+  end
+
+  def solve_part_2    
+    simulate_days(initial_timers, 256)
   end
 end
