@@ -7,7 +7,8 @@ class Task6 < Task
   end
 
   def simulate_days(timer_counts, days)
-    # puts "Initial: #{timer_counts}"
+    debug_log { "Initial: #{timer_counts}" }
+
     day = 1
     while day <= days
       # reset 0 and produce new fishes
@@ -17,7 +18,8 @@ class Task6 < Task
 
       # decrement timer
       timer_counts.transform_keys! { |t| t - 1 }
-      # puts "Day #{day}: #{timer_counts}"
+      debug_log { "Day #{day}: #{timer_counts}" }
+
       day = day + 1
     end
 

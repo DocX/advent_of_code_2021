@@ -56,8 +56,8 @@ class Task3 < Task
   end
 
   def solve_part_1
-    puts "gamma rate: #{gamma_rate(input)}"
-    puts "epsilon rate: #{epsilon_rate(input)}"
+    debug_log { "gamma rate: #{gamma_rate(input)}" }
+    debug_log { "epsilon rate: #{epsilon_rate(input)}" }
 
     gamma_rate(input) * epsilon_rate(input)
   end
@@ -65,8 +65,8 @@ class Task3 < Task
   def solve_part_2
     oxygen_rating_value = oxygen_rating(input)
     co2_rating_value = co2_rating(input)
-    puts "oxygen rating: #{oxygen_rating_value}"
-    puts "co2 rating: #{co2_rating_value}"
+    debug_log { "oxygen rating: #{oxygen_rating_value}" }
+    debug_log { "co2 rating: #{co2_rating_value}" }
 
     oxygen_rating_value * co2_rating_value
   end

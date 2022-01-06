@@ -7,20 +7,37 @@ class Task
   end
 
   def self.factory_cli(arguments)
-    task_no = arguments[0]
-    input_name = arguments.count >= 2 ? "#{arguments[1]}_input.txt" : "input.txt"
+    flags = arguments.select { |arg| arg.start_with? "--" }
+    params = arguments - flags
 
-    factory(task_no, input_name)
+    task_no = params[0]
+    input_name = params.count >= 2 ? "#{params[1]}_input.txt" : "input.txt"
+
+    task = factory(task_no, input_name)
+    task.debug = true if flags.include?("--debug")
+    task
   end
 
   attr_reader :input
+  attr_accessor :debug
 
   def initialize(file_name)
     @input = File.readlines(file_name)
+    @debug = false
   end
 
   def name
     self.class.name
+  end
+
+  def debug_log
+    return unless debug?
+
+    puts yield
+  end
+
+  def debug?
+    @debug
   end
 
   def solve_part_1
@@ -32,10 +49,7 @@ class Task
   end
 
   def print_solution
-    puts "#{name} - Part 1"
-    puts "Result: #{solve_part_1}"
-    puts
-    puts "#{name} - Part 2"
-    puts "Result: #{solve_part_2}"
+    puts "#{name} - Part 1: #{solve_part_1}"
+    puts "#{name} - Part 2: #{solve_part_2}"
   end
 end

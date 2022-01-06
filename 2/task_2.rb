@@ -18,8 +18,8 @@ class Task2 < Task
       end 
     end
 
-    puts "depth: #{final_depth}"
-    puts "horizontal position: #{final_horizontal}"
+    debug_log { "depth: #{final_depth}" }
+    debug_log { "horizontal position: #{final_horizontal}" }
     
     final_depth * final_horizontal
   end
@@ -39,8 +39,8 @@ class Task2 < Task
       end 
     end
     
-    puts "depth: #{final_depth}"
-    puts "horizontal position: #{final_horizontal}"
+    debug_log { "depth: #{final_depth}" }
+    debug_log { "horizontal position: #{final_horizontal}" }
     
     final_depth * final_horizontal
   end
