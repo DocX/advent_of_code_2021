@@ -35,23 +35,32 @@ class Task9 < Task
 
   def basins
     low_points.map do |low_r, low_c|
-      upwards_points([], low_r, low_c)
+      basin_from(low_r, low_c)
     end
   end
 
-  def upwards_points(points, row, col)
-    return points if points.include?([row, col])
-    return points unless valid_point?(row, col)
+  def basin_from(row, col)
+    queue = [[row, col]]
+    basin = []
 
-    next_value = heightmap[row][col]
-    return points unless next_value < 9
+    # Breadth First Search
+    until queue.empty?
+      row, col = queue.pop
 
-    next_points = points + [[row, col]]
-    next_points = upwards_points(next_points, row - 1, col)
-    next_points = upwards_points(next_points, row + 1, col)
-    next_points = upwards_points(next_points, row, col - 1)
-    next_points = upwards_points(next_points, row, col + 1)
-    next_points
+      next if basin.include?([row, col])
+      next unless valid_point?(row, col)
+
+      next_value = heightmap[row][col]
+      next unless next_value < 9
+
+      basin << [row, col]
+      queue << [row - 1, col]
+      queue << [row + 1, col]
+      queue << [row, col - 1]
+      queue << [row, col + 1]
+    end
+
+    basin
   end
 
   def valid_point?(row, col)
@@ -71,16 +80,5 @@ class Task9 < Task
     counts = basins.map(&:count)
     debug_log { counts.join(", ") }
     counts.max(3).reduce(&:*)
-
-    # basins.map do |basin|
-    #   heightmap.count.times.map do |r|
-    #     heightmap[0].count.times.map do |c|
-    #       basin.include?([r,c]) ? heightmap[r][c] : "."
-    #     end.join("")
-    #   end.join("\n")
-    # end.each do |basin| 
-    #   debug_log { basin }
-    #   debug_log { "" }
-    # end
   end
 end
